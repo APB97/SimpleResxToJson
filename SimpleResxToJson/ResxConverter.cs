@@ -1,24 +1,14 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization.Metadata;
 using System.Xml;
 
 namespace apb97.github.io.SimpleResxToJson.Shared;
 
 public static class ResxConverter
 {
-    private static JsonSerializerOptions options = new JsonSerializerOptions(JsonSerializerOptions.Default);
-    
-    static ResxConverter()
-    {
-        options.TypeInfoResolver = new DefaultJsonTypeInfoResolver();
-    }
-
     public static Task WriteAsJsonToStreamAsync(Stream resxInputStream, Stream jsonOutput)
     {
         var keyValueDictionary = LoadStrings(resxInputStream);
-        var data = new ResxData { Strings = keyValueDictionary };
-
-        return JsonSerializer.SerializeAsync(jsonOutput, data, options);
+        return JsonSerializer.SerializeAsync(jsonOutput, new ResxData { Strings = keyValueDictionary }, typeof(ResxData), ResxDataContext.Default);
     }
 
     public static Dictionary<string, string> LoadStrings(Stream stream)
