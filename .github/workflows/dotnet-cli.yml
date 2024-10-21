@@ -34,7 +34,7 @@ jobs:
 
     # Publish
     - name: Publish
-      run: dotnet publish SimpleResxToJson.CLI --no-build --nologo -o publish
+      run: dotnet publish SimpleResxToJson.CLI --nologo -o publish
 
     # Upload the artifact: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
