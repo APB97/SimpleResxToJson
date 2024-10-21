@@ -42,7 +42,7 @@ static async Task ProcessMultipleFiles(string? outputPath, string inputPath)
 static async Task ProcessSingleFile(string? outputPath, string inputPath, string? inputDirectory)
 {
     var inputPathParentDirectory = Path.GetDirectoryName(inputPath);
-    outputPath ??= Path.Combine(
+    outputPath = Path.Combine(
         inputDirectory == null || inputPathParentDirectory == null
             ? Directory.GetCurrentDirectory()
             : Path.Combine(Directory.GetCurrentDirectory(), Path.GetRelativePath(inputDirectory, inputPathParentDirectory)),
