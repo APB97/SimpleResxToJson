@@ -3,8 +3,6 @@ name: .NET Publish
 on:
   push:
     branches: [ "master" ]
-  #pull_request:
-    #branches: [ "master" ]
 
 jobs:
 
@@ -38,7 +36,7 @@ jobs:
 
     # Upload the artifact: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: SimpleResxToJson_Windows
         path: publish
