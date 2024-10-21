@@ -36,6 +36,8 @@ will create or replace file at `./Json/resource.json`.
 
 ### Directory conversion
 
+#### Example
+
 Executing compiled `SimpleResxToJson.CLI.exe` like this:
 
 `SimpleResxToJson.CLI.exe --input=./Resources --output=./Json/Resources`
