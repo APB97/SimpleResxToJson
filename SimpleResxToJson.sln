@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleResxToJson.Shared", "SimpleResxToJson\SimpleResxToJson.Shared.csproj", "{B70664A5-775B-4DF8-9EF4-ACC957F06A89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleResxToJson.Shared", "SimpleResxToJson\SimpleResxToJson.Shared.csproj", "{B70664A5-775B-4DF8-9EF4-ACC957F06A89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleResxToJson.CLI", "SimpleResxToJson.CLI\SimpleResxToJson.CLI.csproj", "{08B392CA-171D-4939-A7A2-B649B828B5D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleResxToJson.CLI", "SimpleResxToJson.CLI\SimpleResxToJson.CLI.csproj", "{08B392CA-171D-4939-A7A2-B649B828B5D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleResxToJson.Shared.Tests", "SimpleResxToJson.Shared.Tests\SimpleResxToJson.Shared.Tests.csproj", "{3D32D335-0A26-4076-84EE-9BB9641499B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{08B392CA-171D-4939-A7A2-B649B828B5D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08B392CA-171D-4939-A7A2-B649B828B5D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08B392CA-171D-4939-A7A2-B649B828B5D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D32D335-0A26-4076-84EE-9BB9641499B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D32D335-0A26-4076-84EE-9BB9641499B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D32D335-0A26-4076-84EE-9BB9641499B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D32D335-0A26-4076-84EE-9BB9641499B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

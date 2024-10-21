@@ -19,7 +19,7 @@ public class SingleResxConverter
 
     private static string GetDestinationPath(string outputPath, string inputPath, string? inputDirectory, string? inputPathParentDirectory)
     {
-        if (inputDirectory != null && inputPathParentDirectory != null)
+        if (inputDirectory != null && inputPathParentDirectory != null && inputDirectory != inputPathParentDirectory)
             return Path.Combine(outputPath, Path.GetRelativePath(inputDirectory, inputPathParentDirectory), GetTargetFileName(inputPath));
         else
             return Path.Combine(outputPath, GetTargetFileName(inputPath));
