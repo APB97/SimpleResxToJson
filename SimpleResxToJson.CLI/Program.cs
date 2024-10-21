@@ -42,13 +42,14 @@ static async Task ProcessMultipleFiles(string? outputPath, string inputPath)
 static async Task ProcessSingleFile(string? outputPath, string inputPath, string? inputDirectory)
 {
     var inputPathParentDirectory = Path.GetDirectoryName(inputPath);
-    outputPath = Path.Combine(
-        inputDirectory == null || inputPathParentDirectory == null
-            ? Directory.GetCurrentDirectory()
-            : Path.Combine(Directory.GetCurrentDirectory(), Path.GetRelativePath(inputDirectory, inputPathParentDirectory)),
-        $"{Path.GetFileNameWithoutExtension(inputPath)}.json");
+    outputPath ??= Directory.GetCurrentDirectory();
+    string destinationPath;
+    if (inputDirectory != null && inputPathParentDirectory != null)
+        destinationPath = Path.Combine(outputPath, Path.GetRelativePath(inputDirectory, inputPathParentDirectory), $"{Path.GetFileNameWithoutExtension(inputPath)}.json");
+    else
+        destinationPath = Path.Combine(outputPath, $"{Path.GetFileNameWithoutExtension(inputPath)}.json");
 
-    Console.WriteLine("Converting {0} into {1} ...", inputPath, outputPath);
-    await SingleResxConverter.ConvertFileAsync(inputPath, outputPath);
-    Console.WriteLine("Converted {0} into {1}", inputPath, outputPath);
+    Console.WriteLine("Converting {0} into {1} ...", inputPath, destinationPath);
+    await SingleResxConverter.ConvertFileAsync(inputPath, destinationPath);
+    Console.WriteLine("Converted {0} into {1}", inputPath, destinationPath);
 }

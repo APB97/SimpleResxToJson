@@ -8,7 +8,7 @@ public class SingleResxConverter
         string? parentDirectory = Path.GetDirectoryName(outputPath);
         if (!string.IsNullOrEmpty(parentDirectory))
             Directory.CreateDirectory(parentDirectory);
-        using var outputFile = File.OpenWrite(outputPath);
+        using var outputFile = File.Open(outputPath, FileMode.Create, FileAccess.Write);
         await ResxConverter.WriteAsJsonToStreamAsync(inputFile, outputFile);
     }
 }
