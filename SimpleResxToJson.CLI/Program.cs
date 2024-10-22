@@ -1,40 +1,36 @@
 ﻿using apb97.github.io.SimpleResxToJson.Shared;
 using System.Collections.Immutable;
 
-var inputs = args.Where(arg => arg.StartsWith("--input=")).ToImmutableArray();
-var output = args.Where(arg => arg.StartsWith("--output=")).ToImmutableArray();
+var inputs = args.Where(arg => arg.StartsWith("--input="))
+    .Select(arg => arg.Replace("--input=", string.Empty))
+    .ToImmutableArray();
+var output = args.Where(arg => arg.StartsWith("--output="))
+    .Select(arg => arg.Replace("--output=", string.Empty))
+    .ToImmutableArray();
+
+var silent = args.Any(arg => arg == "--silent");
+var topDirectoryOnly = args.Any(arg => arg == "--top-dir-only");
+
 if (inputs.Length > 0)
 {
-    string? outputPath = null;
-    if (output.Length == 1)
-    {
-        outputPath = output[0].Replace("--output=", string.Empty);
-    }
-
-    await ProcessInputs(inputs, outputPath);
+    string? outputPath = output.Length == 1 ? output[0] : null;
+    await ProcessInputs(inputs, outputPath, silent, topDirectoryOnly);
 }
 
-static async Task ProcessInputs(ImmutableArray<string> inputs, string? outputPath)
+static async Task ProcessInputs(ImmutableArray<string> inputs, string? outputPath, bool silent, bool topDirectoryOnly)
 {
-    foreach (var inputPath in from input in inputs
-                              let inputPath = input.Replace("--input=", string.Empty)
-                              select inputPath)
+    var converter = new SingleResxConverter { Silent = silent };
+    var multiConverter = new MultipleResxConverter(converter) { DirectorySearchOption = topDirectoryOnly ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories };
+
+    foreach (var inputPath in inputs)
     {
         if (Directory.Exists(inputPath))
         {
-            await ProcessMultipleFiles(outputPath, inputPath);
+            await multiConverter.ProcessMultipleFiles(outputPath, inputPath);
         }
         else
         {
-            await SingleResxConverter.ProcessSingleFile(outputPath, inputPath, Path.GetDirectoryName(inputPath));
+            await converter.ProcessSingleFile(outputPath, inputPath, Path.GetDirectoryName(inputPath));
         }
-    }
-}
-
-static async Task ProcessMultipleFiles(string? outputPath, string inputPath)
-{
-    foreach (var file in Directory.EnumerateFiles(inputPath, "*.resx", SearchOption.AllDirectories))
-    {
-        await SingleResxConverter.ProcessSingleFile(outputPath, file, inputPath);
     }
 }

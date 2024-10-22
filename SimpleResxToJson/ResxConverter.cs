@@ -18,6 +18,8 @@ public static class ResxConverter
         while (xml.ReadToFollowing("data"))
         {
             var key = xml.GetAttribute("name");
+            var type = xml.GetAttribute("type");
+            if (type != null) continue;
             xml.ReadToDescendant("value");
             var value = xml.ReadElementContentAsString();
             if (key == null || value == null) continue;
