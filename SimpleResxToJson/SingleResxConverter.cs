@@ -2,13 +2,15 @@
 
 public class SingleResxConverter
 {
-    public static async Task ProcessSingleFile(string? outputPath, string inputPath, string? inputDirectory)
+    public bool Silent { get; set; }
+
+    public async Task ProcessSingleFile(string? outputPath, string inputPath, string? inputDirectory)
     {
         string destinationPath = GetDestinationPath(outputPath, inputPath, inputDirectory);
 
-        Console.WriteLine("Converting {0} into {1} ...", inputPath, destinationPath);
+        PrintMessage("Converting {0} into {1} ...", inputPath, destinationPath);
         await ConvertFileAsync(inputPath, destinationPath);
-        Console.WriteLine("Converted {0} into {1}", inputPath, destinationPath);
+        PrintMessage("Converted {0} into {1}", inputPath, destinationPath);
     }
 
     public static string GetDestinationPath(string? outputPath, string inputPath, string? inputDirectory)
@@ -38,5 +40,12 @@ public class SingleResxConverter
             Directory.CreateDirectory(parentDirectory);
         using var outputFile = File.Open(outputPath, FileMode.Create, FileAccess.Write);
         await ResxConverter.WriteAsJsonToStreamAsync(inputFile, outputFile);
+    }
+
+    public void PrintMessage(string message, params object[] parameters)
+    {
+        if (Silent) return;
+
+        Console.WriteLine(message, parameters);
     }
 }
