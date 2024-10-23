@@ -32,7 +32,7 @@ static async Task ProcessInputs(ImmutableArray<string> inputs, string? outputPat
         }
         else
         {
-            await converter.ProcessSingleFile(outputPath, inputPath, Path.GetDirectoryName(inputPath));
+            await converter.ProcessSingleFileAsync(outputPath, inputPath, Path.GetDirectoryName(inputPath));
         }
     }
 }
