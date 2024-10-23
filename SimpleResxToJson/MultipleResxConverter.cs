@@ -10,7 +10,7 @@ public class MultipleResxConverter(SingleResxConverter singleResxConverter)
     {
         foreach (var file in Directory.EnumerateFiles(inputPath, ResxSearchPattern, DirectorySearchOption))
         {
-            await singleResxConverter.ProcessSingleFile(outputPath, file, inputPath);
+            await singleResxConverter.ProcessSingleFileAsync(outputPath, file, inputPath);
         }
     }
 }

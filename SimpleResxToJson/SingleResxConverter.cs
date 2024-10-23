@@ -1,37 +1,61 @@
-﻿namespace apb97.github.io.SimpleResxToJson.Shared;
+﻿using apb97.github.io.SimpleResxToJson.Shared.IO;
 
-public class SingleResxConverter
+namespace apb97.github.io.SimpleResxToJson.Shared;
+
+/// <summary>
+/// Creates a ResX converter accepting one file at a time
+/// </summary>
+/// <param name="messsageOutputTarget">Target for output messages.</param>
+public class SingleResxConverter(IOutput messsageOutputTarget)
 {
-    public bool Silent { get; set; }
-
-    public async Task ProcessSingleFile(string? outputPath, string inputPath, string? inputDirectory)
+    /// <summary>
+    /// Converts single *.resx file into *.json file. When <paramref name="outputDirectory"/> is omitted, uses application's current working directory.
+    /// Outputs message to <see cref="IOutput"/> (<seealso cref="NullOutput"/> or <seealso cref="ConsoleOutput"/>) when starting and finishing conversion.
+    /// </summary>
+    /// <param name="outputDirectory">Directory in which all conversion results should be placed.</param>
+    /// <param name="inputFile">*.resx file that should be converted.</param>
+    /// <param name="inputDirectory">Directory that is used to calculate relative path from outputDirectory where the final result will be created.</param>
+    /// <returns></returns>
+    public async Task ProcessSingleFileAsync(string? outputDirectory, string inputFile, string? inputDirectory)
     {
-        string destinationPath = GetDestinationPath(outputPath, inputPath, inputDirectory);
+        string destinationFile = GetDestinationPath(outputDirectory, inputFile, inputDirectory);
 
-        PrintMessage("Converting {0} into {1} ...", inputPath, destinationPath);
-        await ConvertFileAsync(inputPath, destinationPath);
-        PrintMessage("Converted {0} into {1}", inputPath, destinationPath);
+        messsageOutputTarget.PrintMessage("Converting {0} into {1} ...", inputFile, destinationFile);
+        await ConvertFileAsync(inputFile, destinationFile);
+        messsageOutputTarget.PrintMessage("Converted {0} into {1}", inputFile, destinationFile);
     }
 
-    public static string GetDestinationPath(string? outputPath, string inputPath, string? inputDirectory)
+    /// <summary>
+    /// Determines output file location when conversion happens.
+    /// </summary>
+    /// <param name="outputDirectory">Directory in which all conversion results should be placed.</param>
+    /// <param name="inputFile">*.resx file that should be checked for output file path.</param>
+    /// <param name="inputDirectory">Directory that is used to calculate relative path from outputDirectory where the final result will be created.</param>
+    /// <returns>Path to file that will be recreated (created or truncated) when <see cref="ProcessSingleFileAsync(string?, string, string?)"/> is called.</returns>
+    public static string GetDestinationPath(string? outputDirectory, string inputFile, string? inputDirectory)
     {
-        var inputPathParentDirectory = Path.GetDirectoryName(inputPath);
-        return GetDestinationPath(outputPath ?? Directory.GetCurrentDirectory(), inputPath, inputDirectory, inputPathParentDirectory);
+        return GetDestinationPath(outputDirectory ?? Directory.GetCurrentDirectory(), inputFile, inputDirectory, Path.GetDirectoryName(inputFile));
     }
 
-    private static string GetDestinationPath(string outputPath, string inputPath, string? inputDirectory, string? inputPathParentDirectory)
+    private static string GetDestinationPath(string outputPath, string inputFile, string? inputDirectory, string? inputPathParentDirectory)
     {
         if (inputDirectory != null && inputPathParentDirectory != null && inputDirectory != inputPathParentDirectory)
-            return Path.Combine(outputPath, Path.GetRelativePath(inputDirectory, inputPathParentDirectory), GetTargetFileName(inputPath));
+            return Path.Combine(outputPath, Path.GetRelativePath(inputDirectory, inputPathParentDirectory), GetTargetFileName(inputFile));
         else
-            return Path.Combine(outputPath, GetTargetFileName(inputPath));
+            return Path.Combine(outputPath, GetTargetFileName(inputFile));
     }
 
-    private static string GetTargetFileName(string inputPath)
+    private static string GetTargetFileName(string inputFile)
     {
-        return $"{Path.GetFileNameWithoutExtension(inputPath)}.json";
+        return $"{Path.GetFileNameWithoutExtension(inputFile)}.json";
     }
 
+    /// <summary>
+    /// Alternative API for converting a file from any <paramref name="inputPath"/> to any <paramref name="outputPath"/>
+    /// </summary>
+    /// <remarks>Note that expected input should be in correct format</remarks>
+    /// <param name="inputPath">File to be converted</param>
+    /// <param name="outputPath">File to be recreated (created or truncated) as a result of conversion.</param>
     public static async Task ConvertFileAsync(string inputPath, string outputPath)
     {
         using var inputFile = File.OpenRead(inputPath);
@@ -40,12 +64,5 @@ public class SingleResxConverter
             Directory.CreateDirectory(parentDirectory);
         using var outputFile = File.Open(outputPath, FileMode.Create, FileAccess.Write);
         await ResxConverter.WriteAsJsonToStreamAsync(inputFile, outputFile);
-    }
-
-    public void PrintMessage(string message, params object[] parameters)
-    {
-        if (Silent) return;
-
-        Console.WriteLine(message, parameters);
     }
 }
