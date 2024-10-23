@@ -1,16 +1,16 @@
-﻿namespace apb97.github.io.SimpleResxToJson.Shared;
+﻿using apb97.github.io.SimpleResxToJson.Shared.IO;
 
-public class SingleResxConverter
+namespace apb97.github.io.SimpleResxToJson.Shared;
+
+public class SingleResxConverter(IOutput messsageOutputTarget)
 {
-    public bool Silent { get; set; }
-
     public async Task ProcessSingleFile(string? outputPath, string inputPath, string? inputDirectory)
     {
         string destinationPath = GetDestinationPath(outputPath, inputPath, inputDirectory);
 
-        PrintMessage("Converting {0} into {1} ...", inputPath, destinationPath);
+        messsageOutputTarget.PrintMessage("Converting {0} into {1} ...", inputPath, destinationPath);
         await ConvertFileAsync(inputPath, destinationPath);
-        PrintMessage("Converted {0} into {1}", inputPath, destinationPath);
+        messsageOutputTarget.PrintMessage("Converted {0} into {1}", inputPath, destinationPath);
     }
 
     public static string GetDestinationPath(string? outputPath, string inputPath, string? inputDirectory)
@@ -40,12 +40,5 @@ public class SingleResxConverter
             Directory.CreateDirectory(parentDirectory);
         using var outputFile = File.Open(outputPath, FileMode.Create, FileAccess.Write);
         await ResxConverter.WriteAsJsonToStreamAsync(inputFile, outputFile);
-    }
-
-    public void PrintMessage(string message, params object[] parameters)
-    {
-        if (Silent) return;
-
-        Console.WriteLine(message, parameters);
     }
 }
