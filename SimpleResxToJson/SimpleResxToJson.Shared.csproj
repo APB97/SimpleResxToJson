@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <InvariantGlobalization>true</InvariantGlobalization>
     <RootNamespace>apb97.github.io.SimpleResxToJson.Shared</RootNamespace>
   </PropertyGroup>
 
