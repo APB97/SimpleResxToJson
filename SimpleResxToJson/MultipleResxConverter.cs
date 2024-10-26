@@ -7,7 +7,7 @@ public sealed class MultipleResxConverter(ResxConverterOptions options)
     private const string ResxSearchPattern = "*.resx";
 
     private readonly IOutput output = options.Silent ? NullOutput.Instance : ConsoleOutput.Instance;
-    private readonly SingleResxConverter singleResxConverter = new(options.Silent ? NullOutput.Instance : ConsoleOutput.Instance);
+    private readonly SingleResxConverter singleResxConverter = new(options);
     private readonly SearchOption searchOption = options.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
 
     public Task ProcessAsync(string inputPath, string? outputPath)

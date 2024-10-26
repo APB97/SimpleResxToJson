@@ -1,40 +1,27 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Xml;
 
 namespace apb97.github.io.SimpleResxToJson.Shared;
 
-public static class ResxConverter
+public class AllDataResxConverter : IResxConverter
 {
-    public static Task WriteAsJsonToStreamAsync(Stream resxInputStream, Stream jsonOutput)
+    private readonly ResxDataContext context;
+    private readonly ResxConverterOptions options;
+
+    public AllDataResxConverter(ResxConverterOptions options)
     {
-        var keyValueDictionary = LoadStrings(resxInputStream);
-        return JsonSerializer.SerializeAsync(jsonOutput, new ResxStringsData { Strings = keyValueDictionary }, typeof(ResxStringsData), ResxDataContext.Default);
+        context = new ResxDataContext(new JsonSerializerOptions(JsonSerializerOptions.Default) { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
+        this.options = options;
     }
 
-    public static Dictionary<string, string> LoadStrings(Stream stream)
-    {
-        using var xml = XmlReader.Create(stream);
-        var results = new Dictionary<string, string>();
-        while (xml.ReadToFollowing("data"))
-        {
-            var key = xml.GetAttribute("name");
-            var type = xml.GetAttribute("type");
-            if (type != null) continue;
-            xml.ReadToDescendant("value");
-            var value = xml.ReadElementContentAsString();
-            if (key == null || value == null) continue;
-            results[key] = value;
-        }
-        return results;
-    }
-
-    public static Task WriteAllAsJsonToStreamAsync(Stream resxInputStream, Stream jsonOutput)
+    public Task WriteAsJsonToStreamAsync(Stream resxInputStream, Stream jsonOutput)
     {
         var allData = LoadAll(resxInputStream);
-        return JsonSerializer.SerializeAsync(jsonOutput, allData, typeof(ResxData), ResxDataContext.Default);
+        return JsonSerializer.SerializeAsync(jsonOutput, allData, typeof(ResxData), context);
     }
     
-    public static ResxData LoadAll(Stream stream)
+    public ResxData LoadAll(Stream stream)
     {
         using var xml = XmlReader.Create(stream);
         var result = new ResxData { Strings = [], Files = [] };
@@ -56,12 +43,17 @@ public static class ResxConverter
                 case null:
                     result.Strings[key] = new ResxString { Value = value, Comment = comment};
                     break;
+                default:
+                    if (options.SkipNonStrings) continue;
+                    result.Strings[key] = new ResxString { Value = value, Comment = comment };
+                    break;
             }
+
         }
         return result;
     }
 
-    private static ResxFileInfo? GetFileInfo(string value, string? comment)
+    public static ResxFileInfo? GetFileInfo(string value, string? comment)
     {
         string[] splitParts = value.Split(';');
         if (splitParts.Length < 2 || splitParts.Length > 3) return null;

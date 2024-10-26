@@ -6,8 +6,12 @@ namespace apb97.github.io.SimpleResxToJson.Shared;
 /// Creates a ResX converter accepting one file at a time
 /// </summary>
 /// <param name="messsageOutputTarget">Target for output messages.</param>
-public sealed class SingleResxConverter(IOutput messsageOutputTarget)
+public sealed class SingleResxConverter(IOutput messsageOutputTarget, IResxConverter converter)
 {
+    public SingleResxConverter(ResxConverterOptions options)
+        : this(options.Silent ? NullOutput.Instance : ConsoleOutput.Instance,
+              options.StringDataOnly ? new StringsOnlyResxConverter(options) : new AllDataResxConverter(options)) { }
+
     /// <summary>
     /// Converts single *.resx file into *.json file. When <paramref name="outputDirectory"/> is omitted, uses application's current working directory.
     /// Outputs message to <see cref="IOutput"/> (<seealso cref="NullOutput"/> or <seealso cref="ConsoleOutput"/>) when starting and finishing conversion.
@@ -56,13 +60,13 @@ public sealed class SingleResxConverter(IOutput messsageOutputTarget)
     /// <remarks>Note that expected input should be in correct format</remarks>
     /// <param name="inputPath">File to be converted</param>
     /// <param name="outputPath">File to be recreated (created or truncated) as a result of conversion.</param>
-    public static async Task ConvertFileAsync(string inputPath, string outputPath)
+    public async Task ConvertFileAsync(string inputPath, string outputPath)
     {
         using var inputFile = File.OpenRead(inputPath);
         string? parentDirectory = Path.GetDirectoryName(outputPath);
         if (!string.IsNullOrEmpty(parentDirectory))
             Directory.CreateDirectory(parentDirectory);
         using var outputFile = File.Open(outputPath, FileMode.Create, FileAccess.Write);
-        await ResxConverter.WriteAsJsonToStreamAsync(inputFile, outputFile);
+        await converter.WriteAsJsonToStreamAsync(inputFile, outputFile);
     }
 }
