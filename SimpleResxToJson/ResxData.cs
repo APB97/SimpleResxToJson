@@ -5,11 +5,10 @@ namespace apb97.github.io.SimpleResxToJson.Shared;
 public record ResxData
 {
     [JsonInclude]
-    [JsonPropertyName(nameof(Strings))]
-    public required Dictionary<string, string> Strings { get; set; }
-}
+    [JsonPropertyName(nameof(Files))]
+    public required Dictionary<string, ResxFileInfo> Files { get; set; }
 
-[JsonSerializable(typeof(string))]
-[JsonSerializable(typeof(Dictionary<string, string>))]
-[JsonSerializable(typeof(ResxData))]
-public partial class ResxDataContext : JsonSerializerContext { }
+    [JsonInclude]
+    [JsonPropertyName(nameof(Strings))]
+    public required Dictionary<string, ResxString> Strings { get; set; }
+}
