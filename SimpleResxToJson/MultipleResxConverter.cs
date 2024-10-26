@@ -2,23 +2,27 @@
 
 namespace apb97.github.io.SimpleResxToJson.Shared;
 
-public sealed class MultipleResxConverter(SingleResxConverter singleResxConverter, SearchOption searchOption = SearchOption.TopDirectoryOnly)
+public sealed class MultipleResxConverter(ResxConverterOptions options)
 {
-    public MultipleResxConverter(ResxConverterOptions options)
-        : this(new SingleResxConverter(options.Silent ? NullOutput.Instance : ConsoleOutput.Instance),
-              options.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
-    { }
-
     private const string ResxSearchPattern = "*.resx";
-    
+
+    private readonly IOutput output = options.Silent ? NullOutput.Instance : ConsoleOutput.Instance;
+    private readonly SingleResxConverter singleResxConverter = new(options.Silent ? NullOutput.Instance : ConsoleOutput.Instance);
+    private readonly SearchOption searchOption = options.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+
     public Task ProcessAsync(string inputPath, string? outputPath)
     {
         if (Directory.Exists(inputPath))
         {
             return ProcessMultipleFilesAsync(inputPath, outputPath);
         }
-    
-        return singleResxConverter.ProcessSingleFileAsync(outputPath, inputPath, Path.GetDirectoryName(inputPath));
+        else if (File.Exists(inputPath))
+        {
+            return singleResxConverter.ProcessSingleFileAsync(outputPath, inputPath, Path.GetDirectoryName(inputPath));
+        }
+
+        output.PrintMessage("Neither a file nor a directory exist at: {0}", inputPath);
+        return Task.CompletedTask;
     }
 
     private async Task ProcessMultipleFilesAsync(string inputPath, string? outputPath)
