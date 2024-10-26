@@ -7,11 +7,13 @@
     <Nullable>enable</Nullable>
     <InvariantGlobalization>true</InvariantGlobalization>
     <RuntimeIdentifiers>win-x64; linux-x64</RuntimeIdentifiers>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>0.2.0</Version>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
+    <RootNamespace>apb97.github.io.SimpleResxToJson.CLI</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SimpleResxToJson\SimpleResxToJson.Shared.csproj" />
