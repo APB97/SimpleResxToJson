@@ -10,9 +10,9 @@ jobs:
 
     strategy:
       matrix:
-        configuration: [Release]
+        os: [windows-latest, ubuntu-latest]
 
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
     - name: Checkout
@@ -38,5 +38,5 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: SimpleResxToJson_Windows
+        name: join([SimpleResxToJson, ${{ runner.os }}], '_')
         path: publish
