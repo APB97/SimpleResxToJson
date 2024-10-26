@@ -38,5 +38,5 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ format('SimpleResxToJson_{0}', '${{ runner.os }}') }}
+        name: ${{ format('SimpleResxToJson_{0}', ${{ runner.os }}) }}
         path: publish
