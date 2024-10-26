@@ -6,7 +6,7 @@ namespace apb97.github.io.SimpleResxToJson.Shared;
 /// Creates a ResX converter accepting one file at a time
 /// </summary>
 /// <param name="messsageOutputTarget">Target for output messages.</param>
-public class SingleResxConverter(IOutput messsageOutputTarget)
+public sealed class SingleResxConverter(IOutput messsageOutputTarget)
 {
     /// <summary>
     /// Converts single *.resx file into *.json file. When <paramref name="outputDirectory"/> is omitted, uses application's current working directory.

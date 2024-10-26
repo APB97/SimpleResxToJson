@@ -1,14 +1,29 @@
-﻿namespace apb97.github.io.SimpleResxToJson.Shared;
+﻿using apb97.github.io.SimpleResxToJson.Shared.IO;
 
-public class MultipleResxConverter(SingleResxConverter singleResxConverter)
+namespace apb97.github.io.SimpleResxToJson.Shared;
+
+public sealed class MultipleResxConverter(SingleResxConverter singleResxConverter, SearchOption searchOption = SearchOption.TopDirectoryOnly)
 {
+    public MultipleResxConverter(ResxConverterOptions options)
+        : this(new SingleResxConverter(options.Silent ? NullOutput.Instance : ConsoleOutput.Instance),
+              options.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
+    { }
+
     private const string ResxSearchPattern = "*.resx";
-
-    public SearchOption DirectorySearchOption { get; set; } = SearchOption.AllDirectories;
-
-    public async Task ProcessMultipleFiles(string? outputPath, string inputPath)
+    
+    public Task ProcessAsync(string inputPath, string? outputPath)
     {
-        foreach (var file in Directory.EnumerateFiles(inputPath, ResxSearchPattern, DirectorySearchOption))
+        if (Directory.Exists(inputPath))
+        {
+            return ProcessMultipleFilesAsync(inputPath, outputPath);
+        }
+    
+        return singleResxConverter.ProcessSingleFileAsync(outputPath, inputPath, Path.GetDirectoryName(inputPath));
+    }
+
+    private async Task ProcessMultipleFilesAsync(string inputPath, string? outputPath)
+    {
+        foreach (var file in Directory.EnumerateFiles(inputPath, ResxSearchPattern, searchOption))
         {
             await singleResxConverter.ProcessSingleFileAsync(outputPath, file, inputPath);
         }

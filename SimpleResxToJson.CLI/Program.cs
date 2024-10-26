@@ -1,5 +1,4 @@
 ﻿using apb97.github.io.SimpleResxToJson.Shared;
-using apb97.github.io.SimpleResxToJson.Shared.IO;
 using System.Collections.Immutable;
 
 var inputs = args.Where(arg => arg.StartsWith("--input="))
@@ -15,24 +14,19 @@ var recursive = args.Any(arg => arg == "--recursive" || arg == "-R");
 if (inputs.Length > 0)
 {
     string? outputPath = output.Length == 1 ? output[0] : null;
-    await ProcessInputs(inputs, outputPath, silent, recursive);
+    var options = new ResxConverterOptions
+    {
+        Silent = silent,
+        Recursive = recursive,
+    };
+    await ProcessInputsAsync(inputs, outputPath, options);
 }
 
-static async Task ProcessInputs(ImmutableArray<string> inputs, string? outputPath, bool silent, bool recursive)
+static async Task ProcessInputsAsync(ImmutableArray<string> inputs, string? outputPath, ResxConverterOptions options)
 {
-    IOutput messageOutput = silent ? NullOutput.Instance : new ConsoleOutput();
-    var converter = new SingleResxConverter(messageOutput);
-    var multiConverter = new MultipleResxConverter(converter) { DirectorySearchOption = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly };
-
+    var multiConverter = new MultipleResxConverter(options);
     foreach (var inputPath in inputs)
     {
-        if (Directory.Exists(inputPath))
-        {
-            await multiConverter.ProcessMultipleFiles(outputPath, inputPath);
-        }
-        else
-        {
-            await converter.ProcessSingleFileAsync(outputPath, inputPath, Path.GetDirectoryName(inputPath));
-        }
+        await multiConverter.ProcessAsync(inputPath, outputPath);
     }
 }
