@@ -21,7 +21,8 @@ public sealed class MultipleResxConverter(ResxConverterOptions options)
             return singleResxConverter.ProcessSingleFileAsync(outputPath, inputPath, Path.GetDirectoryName(inputPath));
         }
 
-        output.PrintMessage("Neither a file nor a directory exist at: {0}", inputPath);
+        output.PrintMessage("Neither a file nor a directory found at: {0}", inputPath);
+        output.PrintMessage("This may be caused by insufficent permissions regardless of the file existence.");
         return Task.CompletedTask;
     }
 
