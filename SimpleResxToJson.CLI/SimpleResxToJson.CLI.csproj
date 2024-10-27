@@ -9,14 +9,15 @@
     <RuntimeIdentifiers>win-x64; linux-x64</RuntimeIdentifiers>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>0.2.0</Version>
+    <Version>0.3.0</Version>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
+    <Authors>Adrian Bieliński</Authors>
     <RootNamespace>apb97.github.io.SimpleResxToJson.CLI</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleResxToJson\SimpleResxToJson.Shared.csproj" />
+    <ProjectReference Include="..\SimpleResxToJson.Shared\SimpleResxToJson.Shared.csproj" />
   </ItemGroup>
 
 </Project>

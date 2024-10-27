@@ -10,6 +10,8 @@ var output = args.Where(arg => arg.StartsWith("--output="))
 
 var silent = args.Any(arg => arg == "--silent");
 var recursive = args.Any(arg => arg == "--recursive" || arg == "-R");
+var includeAllTypes = args.Any(arg => arg == "--include-all");
+var noTypeParsing = args.Any(arg => arg == "--no-type-parsing");
 
 if (inputs.Length > 0)
 {
@@ -18,6 +20,8 @@ if (inputs.Length > 0)
     {
         Silent = silent,
         Recursive = recursive,
+        StringDataOnly = !includeAllTypes,
+        SkipNonStrings = !noTypeParsing,
     };
     await ProcessInputsAsync(inputs, outputPath, options);
 }

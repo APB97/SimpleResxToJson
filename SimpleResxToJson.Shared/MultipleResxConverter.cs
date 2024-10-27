@@ -7,7 +7,7 @@ public sealed class MultipleResxConverter(ResxConverterOptions options)
     private const string ResxSearchPattern = "*.resx";
 
     private readonly IOutput output = options.Silent ? NullOutput.Instance : ConsoleOutput.Instance;
-    private readonly SingleResxConverter singleResxConverter = new(options.Silent ? NullOutput.Instance : ConsoleOutput.Instance);
+    private readonly SingleResxConverter singleResxConverter = new(options);
     private readonly SearchOption searchOption = options.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
 
     public Task ProcessAsync(string inputPath, string? outputPath)
@@ -21,7 +21,8 @@ public sealed class MultipleResxConverter(ResxConverterOptions options)
             return singleResxConverter.ProcessSingleFileAsync(outputPath, inputPath, Path.GetDirectoryName(inputPath));
         }
 
-        output.PrintMessage("Neither a file nor a directory exist at: {0}", inputPath);
+        output.PrintMessage("Neither a file nor a directory found at: {0}", inputPath);
+        output.PrintMessage("This may be caused by insufficent permissions regardless of the file existence.");
         return Task.CompletedTask;
     }
 
