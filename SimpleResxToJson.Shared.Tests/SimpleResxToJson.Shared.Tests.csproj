@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleResxToJson\SimpleResxToJson.Shared.csproj" />
+    <ProjectReference Include="..\SimpleResxToJson.Shared\SimpleResxToJson.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
