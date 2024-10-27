@@ -1,8 +1,8 @@
-# Simple Resx to JSON
+# Simple ResX to JSON
 
 ## Description
 
-Command-line tool that simply converts a `*.resx` file OR all `*.resx` files in a directory and optionally its subdirectories into `*.json` equivalents and outputs them at desired location.
+Command-line tool that simply converts a `*.resx` file OR all `*.resx` files in a directory and optionally its subdirectories into `*.json` equivalents and outputs them at desired location. Default options cause only values without `type` attribute specified to be included - to override this behavior, check __Usage__ section.
 
 ## Usage
 
@@ -30,7 +30,15 @@ When input is `/path/to/files`, and output directory is `/output/`, then file wi
 
 `--silent`
 
-__Optional__ parameter: Make application skip output messages related to file processing being written to console.
+__Optional__ parameter: Make application stop output messages related to file processing from being written to console.
+
+`--include-all`
+
+__Optional__ parameter: When provided, this parameter groups data into `Strings` and `Files` properties. None of the files mentioned in a `*.rexx` file are read or checked for existence - instead, only data in a `*.resx` file is read and it's split into Value and Type properties with optional Encoding and Comment properties. Properties with `null` values are skipped during serialization and do not appear in output.
+
+`--no-type-parsing`
+
+__Optional__ parameter: When provided, all data is treated as strings, unless `--include-all` is specified - in that case, all data except `System.Resources.ResXFileRef, System.Windows.Forms` is treated as `Strings`. This parameter causes all data types other than `System.Resources.ResXFileRef, System.Windows.Forms` and without `type` attribute (`string`) to be considered as `Strings`.
 
 ### Single file conversion
 
