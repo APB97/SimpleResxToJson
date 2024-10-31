@@ -34,8 +34,9 @@ jobs:
     - name: Publish
       run: dotnet publish SimpleResxToJson.CLI --nologo -o publish
 
-    # Pack BuildTask
+    # Pack BuildTask (only on one runner os)
     - name: Pack into a NuGet package
+      if: runner.os == 'Linux'
       run: dotnet pack SimpleResxToJson.BuildTask -o .
 
     # Upload package (only on one runner os)
