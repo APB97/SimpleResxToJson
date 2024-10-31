@@ -42,7 +42,7 @@ jobs:
     # Upload package (only on one runner os)
     - name: Upload to NuGet
       if: runner.os == 'Linux'
-      run: dotnet nuget push "*.nupkg" -k {{ secrets.NUGET_TOKEN }} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push "*.nupkg" -k ${{ secrets.NUGET_TOKEN }} -s https://api.nuget.org/v3/index.json
 
     # Upload the artifact: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
