@@ -1,7 +1,7 @@
 using apb97.github.io.SimpleResxToJson.Shared;
 using FluentAssertions;
 
-namespace SimpleResxToJson.Shared.Tests;
+namespace APB97.SimpleResxToJson.Shared.Tests;
 
 public class SingleResxConverterTests
 {

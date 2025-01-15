@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Xunit.Abstractions;
 
-namespace SimpleResxToJson.Shared.Tests;
+namespace APB97.SimpleResxToJson.Shared.Tests;
 
 public class AllDataResxConverterTests
 {

@@ -48,14 +48,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleResxToJson.Shared\SimpleResxToJson.Shared.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\APB97.SimpleResxToJson.Shared\APB97.SimpleResxToJson.Shared.csproj" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
     
     <Content Include="build\SimpleResxToJson.BuildTask.props" PackagePath="build\" />
-    <Content Include="build\SimpleResxToJson.BuildTask.targets" PackagePath="build\" />
   </ItemGroup>
 
   <ItemGroup>
