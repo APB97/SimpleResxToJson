@@ -1,5 +1,5 @@
 using apb97.github.io.SimpleResxToJson.Shared;
-using FluentAssertions;
+using Shouldly;
 
 namespace APB97.SimpleResxToJson.Shared.Tests;
 
@@ -12,8 +12,7 @@ public class SingleResxConverterTests
     public void GetDestinationPathTest(string outputPath, string inputFile, string? inputDirectory, string expectedResult)
     {
         SingleResxConverter.GetDestinationPath(outputPath, inputFile, inputDirectory)
-            .Should()
-            .Be(expectedResult);
+            .ShouldBe(expectedResult);
     }
 
     public static TheoryData<string, string, string?, string> GetDestinationPathTestData()

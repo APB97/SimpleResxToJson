@@ -1,6 +1,6 @@
 ﻿using apb97.github.io.SimpleResxToJson.Shared;
-using FluentAssertions;
 using Xunit.Abstractions;
+using Shouldly;
 
 namespace APB97.SimpleResxToJson.Shared.Tests;
 
@@ -11,8 +11,12 @@ public class AllDataResxConverterTests
     public void GetFileInfoTest(string value, string? comment, SerializableResxFileInfo? expected)
     {
         AllDataResxConverter.GetFileInfo(value, comment)
-            .Should()
-            .BeEquivalentTo(expected);
+            .ShouldSatisfyAllConditions(
+                actual => actual?.Comment.ShouldBe(expected?.Comment),
+                actual => actual?.Encoding.ShouldBe(expected?.Encoding),
+                actual => actual?.Type.ShouldBe(expected?.Type),
+                actual => actual?.Value.ShouldBe(expected?.Value)
+                );
     }
 
     public static TheoryData<string, string?, SerializableResxFileInfo?> GetFileInfoTestData()
