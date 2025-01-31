@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APB97.SimpleResxToJson.Shar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APB97.SimpleResxToJson.BuildTask", "APB97.SimpleResxToJson.BuildTask\APB97.SimpleResxToJson.BuildTask.csproj", "{9DDBAAD1-1C37-47E4-86F4-3F5DC3ED7610}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APB97.SimpleResxToJson.Blazor", "APB97.SimpleResxToJson.Blazor\APB97.SimpleResxToJson.Blazor.csproj", "{C4B7234F-D305-402F-ADA5-24FD83C842CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9DDBAAD1-1C37-47E4-86F4-3F5DC3ED7610}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DDBAAD1-1C37-47E4-86F4-3F5DC3ED7610}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DDBAAD1-1C37-47E4-86F4-3F5DC3ED7610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4B7234F-D305-402F-ADA5-24FD83C842CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4B7234F-D305-402F-ADA5-24FD83C842CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4B7234F-D305-402F-ADA5-24FD83C842CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4B7234F-D305-402F-ADA5-24FD83C842CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,60 @@
+﻿@page "/"
+@using apb97.github.io.SimpleResxToJson.Shared
+
+@implements IAsyncDisposable
+
+@inject IJSRuntime JS
+
+<PageTitle>Simple Resx to JSON</PageTitle>
+
+<InputFile OnChange="OnFilesChanged" />
+
+@code {
+    private IJSObjectReference? module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/fileDownload.js");
+    }
+
+    private async Task OnFilesChanged(InputFileChangeEventArgs args)
+    {
+        await using var input = args.File.OpenReadStream(1024 * 1024);
+        await using var inMemoryInput = await OpenInMemoryInputCopyAsync(input);
+        await ConvertAsync(inMemoryInput);
+    }
+
+    /// <summary>
+    /// Workaround for synchrounous read not supported for BrowserFileStream.
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns>In-memory stream with copy of <paramref name="input"/> stream contents.</returns>
+    private async Task<MemoryStream> OpenInMemoryInputCopyAsync(Stream input)
+    {
+        var inMemoryInput = new MemoryStream((int)input.Length);
+        await input.CopyToAsync(inMemoryInput);
+        inMemoryInput.Seek(0, SeekOrigin.Begin);
+        return inMemoryInput;
+    }
+
+    private async Task ConvertAsync(Stream input)
+    {
+        if (module is null) return;
+
+        IResxConverter converter = new AllDataResxConverter(new ResxConverterOptions());
+
+        using var memoryStream = new MemoryStream();
+        await converter.WriteAsJsonToStreamAsync(input, memoryStream);
+        memoryStream.Seek(0, SeekOrigin.Begin);
+
+        await module.InvokeVoidAsync("download", "result.json", new DotNetStreamReference(memoryStream));
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (module is not null)
+        {
+            await module.DisposeAsync();
+        }
+    }
+}
