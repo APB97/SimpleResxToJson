@@ -48,7 +48,8 @@
         await converter.WriteAsJsonToStreamAsync(input, memoryStream);
         memoryStream.Seek(0, SeekOrigin.Begin);
 
-        await module.InvokeVoidAsync("download", resultName, new DotNetStreamReference(memoryStream));
+        using var streamReference = new DotNetStreamReference(memoryStream);
+        await module.InvokeVoidAsync("download", resultName, streamReference);
     }
 
     async ValueTask IAsyncDisposable.DisposeAsync()
