@@ -1,6 +1,6 @@
 ﻿using apb97.github.io.SimpleResxToJson.Shared;
-using Xunit.Abstractions;
 using Shouldly;
+using Xunit.Sdk;
 
 namespace APB97.SimpleResxToJson.Shared.Tests;
 
@@ -84,8 +84,8 @@ public record SerializableResxFileInfo : ResxFileInfo, IXunitSerializable
 {
     public void Deserialize(IXunitSerializationInfo info)
     {
-        Value = info.GetValue<string>(nameof(Value));
-        Type = info.GetValue<string>(nameof(Type));
+        Value = info.GetValue<string>(nameof(Value)) ?? string.Empty;
+        Type = info.GetValue<string>(nameof(Type)) ?? string.Empty;
         Encoding = info.GetValue<string>(nameof(Encoding));
         Comment = info.GetValue<string>(nameof(Comment));
     }
