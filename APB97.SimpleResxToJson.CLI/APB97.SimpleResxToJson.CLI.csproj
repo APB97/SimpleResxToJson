@@ -9,7 +9,7 @@
     <RuntimeIdentifiers>win-x64; linux-x64</RuntimeIdentifiers>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>0.3.0</Version>
+    <Version>0.3.1</Version>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
     <Authors>Adrian Bieliński</Authors>

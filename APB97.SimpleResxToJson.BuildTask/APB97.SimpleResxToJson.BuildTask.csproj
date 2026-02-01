@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>true</IsPackable>
-    <Version>0.3.0</Version>
+    <Version>0.3.1</Version>
     <Title>SimpleResxToJson.BuildTask</Title>
     <PackageId>APB97.SimpleResxToJson.BuildTask</PackageId>
     <Authors>Adrian Bieliński</Authors>
