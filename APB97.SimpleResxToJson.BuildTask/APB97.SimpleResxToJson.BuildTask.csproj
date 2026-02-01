@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <IsPackable>true</IsPackable>
-    <Version>0.3.0</Version>
+    <Version>0.3.1</Version>
     <Title>SimpleResxToJson.BuildTask</Title>
     <PackageId>APB97.SimpleResxToJson.BuildTask</PackageId>
     <Authors>Adrian Bieliński</Authors>
@@ -42,20 +42,19 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.12.6" PrivateAssets="all" ExcludeAssets="Runtime">
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="18.0.2" PrivateAssets="all" ExcludeAssets="Runtime">
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleResxToJson.Shared\SimpleResxToJson.Shared.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\APB97.SimpleResxToJson.Shared\APB97.SimpleResxToJson.Shared.csproj" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
     
     <Content Include="build\SimpleResxToJson.BuildTask.props" PackagePath="build\" />
-    <Content Include="build\SimpleResxToJson.BuildTask.targets" PackagePath="build\" />
   </ItemGroup>
 
   <ItemGroup>

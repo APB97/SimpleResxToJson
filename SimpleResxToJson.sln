@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleResxToJson.Shared", "SimpleResxToJson.Shared\SimpleResxToJson.Shared.csproj", "{B70664A5-775B-4DF8-9EF4-ACC957F06A89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APB97.SimpleResxToJson.Shared", "APB97.SimpleResxToJson.Shared\APB97.SimpleResxToJson.Shared.csproj", "{B70664A5-775B-4DF8-9EF4-ACC957F06A89}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleResxToJson.CLI", "SimpleResxToJson.CLI\SimpleResxToJson.CLI.csproj", "{08B392CA-171D-4939-A7A2-B649B828B5D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APB97.SimpleResxToJson.CLI", "APB97.SimpleResxToJson.CLI\APB97.SimpleResxToJson.CLI.csproj", "{08B392CA-171D-4939-A7A2-B649B828B5D2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleResxToJson.Shared.Tests", "SimpleResxToJson.Shared.Tests\SimpleResxToJson.Shared.Tests.csproj", "{3D32D335-0A26-4076-84EE-9BB9641499B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APB97.SimpleResxToJson.Shared.Tests", "APB97.SimpleResxToJson.Shared.Tests\APB97.SimpleResxToJson.Shared.Tests.csproj", "{3D32D335-0A26-4076-84EE-9BB9641499B4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleResxToJson.BuildTask", "SimpleResxToJson.BuildTask\SimpleResxToJson.BuildTask.csproj", "{9DDBAAD1-1C37-47E4-86F4-3F5DC3ED7610}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APB97.SimpleResxToJson.BuildTask", "APB97.SimpleResxToJson.BuildTask\APB97.SimpleResxToJson.BuildTask.csproj", "{9DDBAAD1-1C37-47E4-86F4-3F5DC3ED7610}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APB97.SimpleResxToJson.Blazor", "APB97.SimpleResxToJson.Blazor\APB97.SimpleResxToJson.Blazor.csproj", "{C4B7234F-D305-402F-ADA5-24FD83C842CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9DDBAAD1-1C37-47E4-86F4-3F5DC3ED7610}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DDBAAD1-1C37-47E4-86F4-3F5DC3ED7610}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DDBAAD1-1C37-47E4-86F4-3F5DC3ED7610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4B7234F-D305-402F-ADA5-24FD83C842CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4B7234F-D305-402F-ADA5-24FD83C842CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4B7234F-D305-402F-ADA5-24FD83C842CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4B7234F-D305-402F-ADA5-24FD83C842CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

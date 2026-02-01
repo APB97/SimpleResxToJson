@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <InvariantGlobalization>true</InvariantGlobalization>
     <RuntimeIdentifiers>win-x64; linux-x64</RuntimeIdentifiers>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>0.3.0</Version>
+    <Version>0.3.1</Version>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
     <Authors>Adrian Bieliński</Authors>
@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleResxToJson.Shared\SimpleResxToJson.Shared.csproj" />
+    <ProjectReference Include="..\APB97.SimpleResxToJson.Shared\APB97.SimpleResxToJson.Shared.csproj" />
   </ItemGroup>
 
 </Project>

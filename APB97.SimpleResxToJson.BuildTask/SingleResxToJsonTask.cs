@@ -1,7 +1,7 @@
 ﻿using apb97.github.io.SimpleResxToJson.Shared;
 using System.ComponentModel.DataAnnotations;
 
-namespace SimpleResxToJson.BuildTask;
+namespace APB97.SimpleResxToJson.BuildTask;
 
 public class SingleResxToJsonTask : Microsoft.Build.Utilities.Task
 {
